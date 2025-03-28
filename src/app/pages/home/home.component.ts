@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChildren, QueryList, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomeService } from './service/home.service';
+import { CarService, Car } from '../../services/car.service';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +15,8 @@ export class HomeComponent implements AfterViewInit {
 
   constructor(private homeService: HomeService) { }
 
-  cars:any = [];
+  cars: Car[] = [];
+  phone: string = '13083891551';
 
   ngOnInit() {
     this.homeService.getCars().subscribe((cars: any) => {
@@ -36,10 +38,10 @@ export class HomeComponent implements AfterViewInit {
     alert('¡Gracias por elegir WJ Sales! Por favor llama al +(308)-389-1551 para asistencia inmediata.');
   }
 
-  onWhatsAppClick(car: any, event: Event) {
+  onWhatsAppClick(car: Car, event: Event) {
     event.preventDefault();
-    const phone = '13083891551';
-    const message = `Hola William, me interesa el ${car.name} que vi en su página web con precio de ${car.price}. ¿Podría darme más información?`;
+    const phone = this.phone;
+    const message = `Hola William, me interesa el ${car.nombre} que vi en su página web con precio de ${car.precio}. ¿Podría darme más información?`;
     const whatsappUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
     if (typeof window !== 'undefined') {
       window.open(whatsappUrl, '_blank');

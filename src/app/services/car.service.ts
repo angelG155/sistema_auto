@@ -51,4 +51,9 @@ export class CarService {
   updateCarStatus(id: number, estado: string): Observable<Car> {
     return this.http.patch<Car>(`${this.apiUrl}/${id}/estado`, { estado });
   }
+
+  getCarshome() {
+    const url = `${URL_SERVICIOS}/autos`;
+    return this.http.get(url);
+  }
 }

@@ -13,24 +13,51 @@
         <p>Descubre nuestra selección de vehículos de alta calidad con los mejores precios del mercado</p>
       </div>
 
+
       <div class="car-grid">
-        @for (car of cars; track car.name) {
-          <div class="car-card" [class.featured-car]="car.featured" #cardElement>
-            <img [src]="car.imagenUrlCompleta" [alt]="car.nombre" class="car-image">
-            <div class="car-details">
-              <h3>{{car.nombre}}</h3>
-              <p>{{car.tipoCarroceria}}</p>
-              <p>{{car.descripcion}}</p>
-              <div class="car-price">{{car.precio}}</div>
-              <a href="#" class="car-button" (click)="onWhatsAppClick(car, $event)">
-                <i class="fab fa-whatsapp"></i> Consultar por WhatsApp
-              </a>
-            </div>
+        @for (car of cars; track car.nombre; let index = $index) {
+
+        @if (index === 0) {
+        <!-- Featured Car - Newest Toyota -->
+        <div class="car-card featured-car" #cardElement>
+          <img [src]="car.imagenUrlCompleta" [alt]="car.nombre" class="car-image">
+          <div class="car-details">
+            <h3>{{car.nombre}}</h3>
+            <p>{{car.tipoCarroceria}}</p>
+            @for (caracteristica of car.caracteristicas; track caracteristica) {
+              <a style="color: rgb(126, 126, 119);">{{caracteristica}} | </a>
+            }
+            <p style="font-weight: bold;">{{car.descripcion}}</p>
+            <div class="car-price">$/{{car.precio}}</div>
+            <a href="#" class="car-button" (click)="onWhatsAppClick(car, $event)">
+              <i class="fab fa-whatsapp"></i> Consultar por WhatsApp
+            </a>
           </div>
+        </div>
+        }
+
+        @if (index !== 0) {
+        <div class="car-card" #cardElement>
+          <img [src]="car.imagenUrlCompleta" [alt]="car.nombre" class="car-image">
+          <div class="car-details">
+            <h3>{{car.nombre}}</h3>
+            <p>{{car.tipoCarroceria}}</p>
+            @for (caracteristica of car.caracteristicas; track caracteristica) {
+              <a style="color: rgb(126, 126, 119);">{{caracteristica}} | </a>
+            }
+            <p style="font-weight: bold;">{{car.descripcion}}</p>
+            <div class="car-price">$/{{car.precio}}</div>
+            <a href="#" class="car-button" (click)="onWhatsAppClick(car, $event)">
+              <i class="fab fa-whatsapp"></i> Consultar por WhatsApp
+            </a>
+          </div>
+        </div>
+        }
+
         } @empty {
-          <div class="no-cars">
-            <p>No hay vehículos disponibles en este momento.</p>
-          </div>
+        <div class="no-cars">
+          <p>No hay vehículos disponibles en este momento.</p>
+        </div>
         }
       </div>
     </div>
