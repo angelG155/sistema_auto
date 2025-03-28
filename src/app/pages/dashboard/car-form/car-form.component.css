@@ -1,0 +1,40 @@
+.contenedor-carac {
+  border: 1px solid #ccc;
+  min-height: 50px;
+  border-radius: 8px;
+  padding: 5px;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.listado-caracteristicas {
+  color: white;
+  font-size: 13px;
+  background-color: #38a3a5;
+  margin-bottom: 2px;
+  padding: 5px 10px;
+  border-radius: 8px;
+  margin-right: 5px;
+  margin-top: 5px;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: calc(100% - 10px);
+  white-space: normal;
+  text-overflow: ellipsis;
+}
+
+.btn-close-p {
+  padding: 3px;
+  font-size: 10px;
+  font-weight: bold;
+  background-color: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: color 0.3s ease-in-out;
+}
+
+.btn-close-p:hover {
+  color: #e5e5e5;
+}

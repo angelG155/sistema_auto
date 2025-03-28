@@ -1,0 +1,345 @@
+.principal {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+
+  background: linear-gradient(135deg, #f5f7fa 0%, #e8e8e8 100%);
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Header styles */
+header {
+  background: #000000;
+  color: white;
+  padding: 2rem 0;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+header h1 {
+  color: white;
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.highlight {
+  color: #00C853;
+  font-weight: bold;
+}
+
+header p {
+  color: white;
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+
+/* Car showcase section */
+.car-showcase {
+  padding: 4rem 0;
+}
+
+.showcase-intro {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.showcase-intro h2 {
+  font-size: 2.5rem;
+  color: #000000;
+  margin-bottom: 1rem;
+}
+
+.showcase-intro p {
+  font-size: 1.2rem;
+  color: #333;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* 3D Car Grid */
+.car-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 2rem 0;
+}
+
+.car-card {
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  border: 1px solid rgba(0,0,0,0.1);
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.car-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 30px rgba(0,0,0,0.2);
+}
+
+.car-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  transition: all 0.5s ease;
+}
+
+.car-card:hover .car-image {
+  transform: scale(1.05);
+}
+
+.car-details {
+  padding: 1.5rem;
+  background: linear-gradient(to top, rgba(255,255,255,1) 0%, rgba(255,255,255,0.9) 100%);
+}
+
+.car-details h3 {
+  font-size: 1.4rem;
+  color: #000000;
+  margin-bottom: 0.5rem;
+}
+
+.car-details p {
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.car-price {
+  font-size: 1.5rem;
+  color: #00C853;
+  font-weight: bold;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  margin: 1rem 0;
+}
+
+.car-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.5rem;
+  background: #25D366;  /* WhatsApp green */
+  color: white;
+  text-decoration: none;
+  border-radius: 25px;
+  margin-top: 1rem;
+  transition: all 0.3s ease;
+  border: none;
+  text-transform: uppercase;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.car-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+  background: #128C7E;  /* Darker WhatsApp green */
+}
+
+.car-button i {
+  font-size: 1.2rem;
+}
+
+/* WhatsApp footer styles */
+.whatsapp-footer {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  color: #25D366;
+}
+
+.whatsapp-footer i {
+  font-size: 1.4rem;
+  vertical-align: middle;
+  margin-right: 0.5rem;
+}
+
+/* Footer styles */
+footer {
+  background: #000000;
+  color: white;
+  padding: 2rem 0;
+  margin-top: 4rem;
+}
+
+footer p {
+  text-align: center;
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+/* Featured Car Styles */
+.featured-car {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  background: linear-gradient(to right, #ffffff, #f8f9fa);
+  padding: 1rem;
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.featured-car::before {
+  content: '🌟 Featured';
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: #00C853;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  z-index: 1;
+}
+
+.featured-car .car-image {
+  height: 300px;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.featured-car .car-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.featured-car .car-details h3 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.featured-car .car-price {
+  font-size: 2rem;
+  margin: 1rem 0;
+}
+
+.featured-car .car-button {
+  align-self: flex-start;
+  font-size: 1.1rem;
+  padding: 1rem 2rem;
+}
+
+/* Luxury Car Styles */
+.luxury-car {
+  background: linear-gradient(145deg, #1a1a1a 0%, #2d2d2d 100%);
+  color: white;
+}
+
+.luxury-car .car-details h3,
+.luxury-car .car-details p {
+  color: white;
+}
+
+.luxury-car .car-price {
+  color: #00C853;
+  text-shadow: 0 0 10px rgba(0,200,83,0.3);
+}
+
+.luxury-car .car-button {
+  background: #25D366;
+}
+
+.luxury-car .car-button:hover {
+  background: #128C7E;
+  color: white;
+  border-color: #128C7E;
+}
+
+.luxury-car::before {
+  content: '🏆 Premium';
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: #00C853;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  z-index: 1;
+}
+
+/* Additional Card Improvements */
+.car-card {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.car-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 30px rgba(0,0,0,0.2);
+}
+
+.car-image {
+  transition: all 0.5s ease;
+}
+
+.car-card:hover .car-image {
+  transform: scale(1.05);
+}
+
+.car-details {
+  padding: 1.5rem;
+  background: linear-gradient(to top, rgba(255,255,255,1) 0%, rgba(255,255,255,0.9) 100%);
+}
+
+.car-price {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  margin: 1rem 0;
+}
+
+.car-button {
+  text-transform: uppercase;
+  font-weight: 500;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+}
+
+/* Responsive Improvements */
+@media (max-width: 768px) {
+  .car-grid {
+      gap: 1.5rem;
+  }
+
+  .car-card {
+      margin-bottom: 1rem;
+  }
+
+  .luxury-car,
+  .featured-car {
+      grid-column: auto;
+  }
+
+  header h1 {
+      font-size: 2rem;
+  }
+
+  .showcase-intro h2 {
+      font-size: 2rem;
+  }
+
+  .featured-car {
+      grid-template-columns: 1fr;
+  }
+
+  .featured-car .car-image {
+      height: 250px;
+  }
+}

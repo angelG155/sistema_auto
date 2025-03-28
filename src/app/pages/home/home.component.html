@@ -1,0 +1,49 @@
+<div class="principal">
+  <header>
+    <div class="container">
+      <h1><span class="highlight">WJ</span> Car Sales</h1>
+      <p>El Mejor Precio del Mercado</p>
+    </div>
+  </header>
+
+  <section class="car-showcase">
+    <div class="container">
+      <div class="showcase-intro">
+        <h2>Nuestro Inventario Premium</h2>
+        <p>Descubre nuestra selección de vehículos de alta calidad con los mejores precios del mercado</p>
+      </div>
+
+      <div class="car-grid">
+        @for (car of cars; track car.name) {
+          <div class="car-card" [class.featured-car]="car.featured" #cardElement>
+            <img [src]="car.imagenUrlCompleta" [alt]="car.nombre" class="car-image">
+            <div class="car-details">
+              <h3>{{car.nombre}}</h3>
+              <p>{{car.tipoCarroceria}}</p>
+              <p>{{car.descripcion}}</p>
+              <div class="car-price">{{car.precio}}</div>
+              <a href="#" class="car-button" (click)="onWhatsAppClick(car, $event)">
+                <i class="fab fa-whatsapp"></i> Consultar por WhatsApp
+              </a>
+            </div>
+          </div>
+        } @empty {
+          <div class="no-cars">
+            <p>No hay vehículos disponibles en este momento.</p>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="container">
+    <p>Owner: William Thompson</p>
+    <p>📞 +(308)-389-1551 📍 West Palm Beach, Florida</p>
+    <p class="whatsapp-footer">
+      <i class="fab fa-whatsapp"></i> ¡Contáctanos por WhatsApp para más información!
+    </p>
+  </div>
+</footer>

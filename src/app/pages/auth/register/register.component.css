@@ -1,0 +1,80 @@
+.box1{
+  padding: 20px 15%;
+}
+
+.hero {
+  /* Fondo azul */
+  padding: 50px 0;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+
+  display: flex;
+  flex-wrap: wrap;
+}
+
+
+.text-container {
+  position: relative;
+  z-index: 2;
+  padding: 20px;
+}
+
+.text-container h1 {
+  font-size: 2.5rem; /* Tamaño reducido */
+  color: #1c63dd;
+  font-weight: bold;
+}
+
+.text-container p {
+  font-size: 1rem; /* Tamaño reducido para pantallas pequeñas */
+  color: #333;
+  margin: 20px 0;
+}
+
+.btn-gradient {
+  display: inline-block;
+  padding: 10px 30px;
+  background: #1A62FF;
+  color: #fff;
+  border-radius: 30px;
+  text-decoration: none;
+  font-size: 1rem; /* Tamaño del texto en el botón reducido */
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.image-container {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+.image-container img {
+
+  height: auto;
+  margin-top: 30px;
+}
+
+/* Responsive Styles para móviles */
+@media (max-width: 768px) {
+
+
+  .text-container h1 {
+      font-size: 2rem; /* Texto más pequeño en móviles */
+  }
+
+  .text-container p {
+      font-size: 0.9rem; /* Reducción del tamaño de la descripción */
+  }
+
+  .image-container img {
+      max-width: 70%; /* Ajuste de imagen en pantallas pequeñas */
+      margin-top: 20px;
+  }
+
+  .btn-gradient {
+      font-size: 0.9rem; /* Tamaño del botón ajustado para móviles */
+      padding: 10px 25px;
+  }
+}

@@ -1,0 +1,161 @@
+<main>
+
+
+    <!-- breadcrumb area start -->
+    <section class="breadcrumb__area include-bg text-center pt-95 pb-50" [hidden]="view">
+       <div class="container">
+          <div class="row">
+             <div class="col-xxl-12">
+                <div class="breadcrumb__content p-relative z-index-1">
+                   <h3 class="breadcrumb__title">Registrate ahora</h3>
+                   <div class="breadcrumb__list">
+                      <span><a href="#">Home</a></span>
+                      <span>Registrate</span>
+                   </div>
+                </div>
+             </div>
+          </div>
+       </div>
+    </section>
+    <!-- breadcrumb area end -->
+
+    <!-- login area start -->
+    <section class="tp-login-area pb-140 p-relative z-index-1 fix" [hidden]="view">
+       <div class="tp-login-shape">
+          <img class="tp-login-shape-1" src="assets/img/login/login-shape-1.png" alt="">
+          <img class="tp-login-shape-2" src="assets/img/login/login-shape-2.png" alt="">
+          <img class="tp-login-shape-3" src="assets/img/login/login-shape-3.png" alt="">
+          <img class="tp-login-shape-4" src="assets/img/login/login-shape-4.png" alt="">
+       </div>
+       <div class="container">
+          <div class="row justify-content-center">
+             <div class="col-xl-6 col-lg-8">
+                <div class="tp-login-wrapper">
+                   <div class="tp-login-top text-center mb-30">
+                      <h3 class="tp-login-title">Inscribirse Gsp Import</h3>
+                      <p>¿Ya tienes una cuenta?  <span><a routerLink="/login">Iniciar sesión</a></span></p>
+                   </div>
+                   <div class="tp-login-option">
+                      <!-- <div class="tp-login-social mb-10 d-flex flex-wrap align-items-center justify-content-center">
+                         <div class="tp-login-option-item has-google">
+                            <a href="#">
+                               <img src="assets/img/icon/login/google.svg" alt="">
+                               Sign up with google
+                            </a>
+                         </div>
+                         <div class="tp-login-option-item">
+                            <a href="#">
+                               <img src="assets/img/icon/login/facebook.svg" alt="">
+                            </a>
+                         </div>
+                         <div class="tp-login-option-item">
+                            <a href="#">
+                               <img class="apple" src="assets/img/icon/login/apple.svg" alt="">
+                            </a>
+                         </div>
+                      </div> -->
+                      <div class="tp-login-mail text-center mb-40">
+                         <p>o regístrate con <a href="#">Email</a></p>
+                      </div>
+                      <div class="tp-login-input-wrapper">
+                         <div class="tp-login-input-box">
+                            <div class="tp-login-input">
+                               <input id="name" type="text" [(ngModel)]="name" placeholder="Daniel">
+                            </div>
+                            <div class="tp-login-input-title">
+                               <label for="name">Tu nombre</label>
+                            </div>
+                         </div>
+                         <div class="tp-login-input-box">
+                           <div class="tp-login-input">
+                              <input id="name" type="text" [(ngModel)]="surname" placeholder="Hernandez">
+                           </div>
+                           <div class="tp-login-input-title">
+                              <label for="name">Tu apellido</label>
+                           </div>
+                        </div>
+                        <div class="tp-login-input-box">
+                           <div class="tp-login-input">
+                              <input id="name" type="number" [(ngModel)]="phone" placeholder="99999999">
+                           </div>
+                           <div class="tp-login-input-title">
+                              <label for="name">Tu numero</label>
+                           </div>
+                        </div>
+                         <div class="tp-login-input-box">
+                            <div class="tp-login-input">
+                               <input id="email" type="email" [(ngModel)]="email" placeholder="gsp@mail.com">
+                            </div>
+                            <div class="tp-login-input-title">
+                               <label for="email">Tú Email</label>
+                            </div>
+                         </div>
+                         <div class="tp-login-input-box">
+                            <div class="tp-login-input">
+                               <input id="tp_password" [(ngModel)]="password" [type]="isPasswordVisible ? 'text' : 'password'" placeholder="Min. 8 caracteres">
+                            </div>
+                            <div class="tp-login-input-eye" id="password-show-toggle" (click)="passwordVisibility()" >
+
+                              @if (isPasswordVisible) {
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                  <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+                                  <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
+                                </svg>
+                              }@else{
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash-fill" viewBox="0 0 16 16">
+                                  <path d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7 7 0 0 0 2.79-.588M5.21 3.088A7 7 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474z"/>
+                                  <path d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12z"/>
+                                </svg>
+                              }
+
+                            </div>
+                            <div class="tp-login-input-title">
+                               <label for="tp_password">Contraseña</label>
+                            </div>
+                         </div>
+                      </div>
+                      <div class="tp-login-suggetions d-sm-flex align-items-center justify-content-between mb-20">
+                         <div class="tp-login-remeber">
+                            <input id="remeber" type="checkbox" (change)="onCheckboxChange($event)">
+                            <label for="remeber">Acepto los términos del servicio & <a href="#">política de privacidad</a>.</label>
+                         </div>
+                      </div>
+                      <div class="tp-login-bottom">
+
+                         <button [hidden]="isLoading" [disabled]="!isChecked" class="btn btn-dark tp-login-btn w-100" (click)="register()">Registrarse</button>
+
+                         <button [hidden]="!isLoading" class="btn btn-dark tp-login-btn w-100" type="button" disabled>
+                          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                          <span class="visually m-2">Cargando...</span>
+                        </button>
+
+                      </div>
+
+                   </div>
+                </div>
+             </div>
+          </div>
+       </div>
+    </section>
+
+    <section [hidden]="!view">
+
+      <div class="box1">
+
+        <div class="hero container-fluid align-items-center"  >
+          <div class="col-lg-6  text-container">
+              <h1 class="text-justify">¡Correo de confirmación enviado!</h1>
+              <p class="text-justify">Hemos enviado un correo electrónico de confirmación a la dirección que proporcionaste. Por favor, revisa tu bandeja de entrada (y la carpeta de spam o correo no deseado, si es necesario) para confirmar tu cuenta. Una vez que confirmes tu cuenta, podrás acceder a todas las funciones de nuestra página web</p>
+              <a routerLink="/login" class="btn btn-gradient">Iniciar Sesión</a>
+          </div>
+          <div class="col-lg-6 d-flex justify-content-center align-items-center image-container">
+              <img src="assets/img/login/email.png" alt="Envelope" class="img-fluid" >
+          </div>
+        </div>
+
+    </div>
+  </section>
+
+    <!-- login area end -->
+
+ </main>
