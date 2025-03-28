@@ -49,131 +49,126 @@
           </button>
         </div>
 
-        <form [formGroup]="carForm" (ngSubmit)="onSubmit()" class="space-y-6">
+        <form [formGroup]="carForm">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             <!-- Información básica -->
             <div class="space-y-4">
-              <div>
+              <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700">Nombre</label>
-                <input type="text" formControlName="nombre" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm md:text-base">
-                <div *ngIf="carForm.get('nombre')?.invalid && carForm.get('nombre')?.touched" class="text-red-600 text-xs md:text-sm mt-1">
-                  El nombre es requerido
-                </div>
+                <input
+                  type="text"
+                  formControlName="nombre"
+                  (blur)="onBlur('nombre')"
+                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                >
               </div>
 
-              <div>
+              <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700">Marca</label>
-                <input type="text" formControlName="marca" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm md:text-base">
-                <div *ngIf="carForm.get('marca')?.invalid && carForm.get('marca')?.touched" class="text-red-600 text-xs md:text-sm mt-1">
-                  La marca es requerida
-                </div>
+                <input
+                  type="text"
+                  formControlName="marca"
+                  (blur)="onBlur('marca')"
+                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                >
               </div>
 
-              <div>
+              <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700">Modelo</label>
-                <input type="text" formControlName="modelo" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm md:text-base">
-                <div *ngIf="carForm.get('modelo')?.invalid && carForm.get('modelo')?.touched" class="text-red-600 text-xs md:text-sm mt-1">
-                  El modelo es requerido
-                </div>
+                <input
+                  type="text"
+                  formControlName="modelo"
+                  (blur)="onBlur('modelo')"
+                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                >
               </div>
 
-              <div>
+              <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700">Año</label>
-                <input type="number" formControlName="anio" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm md:text-base">
-                <div *ngIf="carForm.get('anio')?.invalid && carForm.get('anio')?.touched" class="text-red-600 text-xs md:text-sm mt-1">
-                  El año es requerido
-                </div>
+                <input
+                  type="number"
+                  formControlName="anio"
+                  (blur)="onBlur('anio')"
+                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                >
               </div>
             </div>
 
             <!-- Detalles adicionales -->
             <div class="space-y-4">
-              <div>
+              <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700">Tipo de Carrocería</label>
-                <select formControlName="tipoCarroceria" class="p-3 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm md:text-base">
-                  <option value="" disabled selected>Seleccione un tipo de carrocería</option>
-                  <option value="sedan">Sedán</option>
-                  <option value="suv">SUV</option>
-                  <option value="hatchback">Hatchback</option>
-                  <option value="pickup">Pickup</option>
-                  <option value="van">Van</option>
-                  <option value="coupe">Coupé</option>
-                  <option value="wagon">Wagon</option>
-                  <option value="convertible">Convertible</option>
-                  <option value="truck">Truck</option>
+                <select
+                  formControlName="tipoCarroceria"
+                  (blur)="onBlur('tipoCarroceria')"
+                  class="p-3 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                >
+                  <option value="">Seleccione un tipo</option>
+                  <option *ngFor="let tipo of tiposCarroceria" [value]="tipo">{{tipo}}</option>
                 </select>
-                <div *ngIf="carForm.get('tipoCarroceria')?.invalid && carForm.get('tipoCarroceria')?.touched" class="text-red-600 text-xs md:text-sm mt-1">
-                  El tipo de carrocería es requerido
-                </div>
               </div>
 
-              <div>
+              <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700">Color</label>
-                <input type="text" formControlName="color" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm md:text-base">
-                <div *ngIf="carForm.get('color')?.invalid && carForm.get('color')?.touched" class="text-red-600 text-xs md:text-sm mt-1">
-                  El color es requerido
-                </div>
+                <input
+                  type="text"
+                  formControlName="color"
+                  (blur)="onBlur('color')"
+                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                >
               </div>
 
-              <div>
+              <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700">Placas</label>
-                <input type="text" formControlName="placas" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm md:text-base">
-                <div *ngIf="carForm.get('placas')?.invalid && carForm.get('placas')?.touched" class="text-red-600 text-xs md:text-sm mt-1">
-                  Las placas son requeridas
-                </div>
+                <input
+                  type="text"
+                  formControlName="placas"
+                  (blur)="onBlur('placas')"
+                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                >
               </div>
 
-              <div>
-                <label class="block text-sm font-medium text-gray-700">Estado</label>
-                <select formControlName="estado" class="p-3 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm md:text-base">
-                  <option value="" disabled selected>Seleccione un estado</option>
-                  <option value="Disponible">Disponible</option>
-                  <option value="Vendido">Vendido</option>
-                  <option value="En mantenimiento">En mantenimiento</option>
-                </select>
-                <div *ngIf="carForm.get('estado')?.invalid && carForm.get('estado')?.touched" class="text-red-600 text-xs md:text-sm mt-1">
-                  El estado es requerido
-                </div>
-              </div>
+              <!-- Eliminar o comentar esta sección -->
+              <!-- <div class="mb-4">
+                <label for="estado">Estado</label>
+                <input formControlName="estado" ...>
+              </div> -->
             </div>
 
             <!-- Información adicional -->
             <div class="col-span-1 md:col-span-2 space-y-4">
-              <div>
+              <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700">Descripción</label>
                 <textarea
                   formControlName="descripcion"
+                  (blur)="onBlur('descripcion')"
                   rows="6"
-                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm md:text-base min-h-[150px] resize-y"
+                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm md:text-base min-h-[150px] resize-y"
                   placeholder="Ingrese una descripción del vehículo"
                 ></textarea>
-                <div *ngIf="carForm.get('descripcion')?.invalid && carForm.get('descripcion')?.touched" class="text-red-600 text-xs md:text-sm mt-1">
-                  La descripción es requerida
-                </div>
               </div>
 
-              <div>
+              <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700">Precio</label>
-                <input type="text" formControlName="precio" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm md:text-base">
-                <div *ngIf="carForm.get('precio')?.invalid && carForm.get('precio')?.touched" class="text-red-600 text-xs md:text-sm mt-1">
-                  El precio es requerido
-                </div>
+                <input
+                  type="number"
+                  formControlName="precio"
+                  (blur)="onBlur('precio')"
+                  step="0.01"
+                  min="0"
+                  max="1000000"
+                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                >
               </div>
 
-              <div>
+              <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700">URL de la Imagen</label>
-                <input type="text" formControlName="imagenUrl" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm md:text-base">
-                <div *ngIf="carForm.get('imagenUrl')?.invalid && carForm.get('imagenUrl')?.touched" class="text-red-600 text-xs md:text-sm mt-1">
-                  La URL de la imagen es requerida
-                </div>
-              </div>
-
-              <div>
-                <label class="block text-sm font-medium text-gray-700">Último Servicio</label>
-                <input type="date" formControlName="ulimoServicio" class="p-2 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm md:text-base">
-                <div *ngIf="carForm.get('ulimoServicio')?.invalid && carForm.get('ulimoServicio')?.touched" class="text-red-600 text-xs md:text-sm mt-1">
-                  La fecha del último servicio es requerida
-                </div>
+                <input
+                  type="text"
+                  formControlName="imagenUrl"
+                  (blur)="onBlur('imagenUrl')"
+                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                >
               </div>
 
               <div>
@@ -213,12 +208,20 @@
             </div>
           </div>
 
-          <div class="flex justify-end space-x-3 pt-6">
-            <button type="button" (click)="cancelar()" class="px-3 py-2 md:px-4 md:py-2 border rounded-md text-gray-600 hover:bg-gray-50 transition-colors text-sm md:text-base">
+          <div class="flex justify-end gap-4 mt-4">
+            <button
+              type="button"
+              class="px-4 py-2 text-gray-600 bg-gray-200 rounded-md hover:bg-gray-300"
+              (click)="cancelar()">
               Cancelar
             </button>
-            <button type="submit" [disabled]="!carForm.valid" class="px-3 py-2 md:px-4 md:py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:bg-blue-300 transition-colors text-sm md:text-base">
-              {{ editingCar ? 'Actualizar' : 'Crear' }}
+
+            <button
+              type="button"
+              [disabled]="!carForm.valid || caracteristicas.length === 0"
+              (click)="onSubmit()"
+              class="px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed">
+              {{ editingCar ? 'Actualizar' : 'Crear' }} Vehículo
             </button>
           </div>
         </form>

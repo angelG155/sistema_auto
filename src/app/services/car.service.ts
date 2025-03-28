@@ -16,7 +16,6 @@ export interface Car {
   descripcion: string;
   precio: string;
   imagenUrlCompleta: string;
-  ulimoServicio: string;
   caracteristicas: string[];
 }
 
@@ -36,8 +35,8 @@ export class CarService {
     return this.http.get<Car>(`${this.apiUrl}/${id}`);
   }
 
-  createCar(car: Car): Observable<Car> {
-    return this.http.post<Car>(this.apiUrl, car);
+  createCar(carData: Car): Observable<Car> {
+    return this.http.post<Car>(this.apiUrl, carData);
   }
 
   updateCar(id: number, car: Car): Observable<Car> {
