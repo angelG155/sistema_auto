@@ -35,8 +35,8 @@ export class CarService {
     return this.http.get<Car>(`${this.apiUrl}/${id}`);
   }
 
-  createCar(carData: Car): Observable<Car> {
-    return this.http.post<Car>(this.apiUrl, carData);
+  createCar(data: FormData): Observable<Car> {
+    return this.http.post<Car>(`${this.apiUrl}`, data);
   }
 
   updateCar(id: number, car: Car): Observable<Car> {

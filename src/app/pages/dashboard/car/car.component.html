@@ -1,1 +1,50 @@
-<router-outlet></router-outlet>
+<div class="flex h-screen overflow-hidden bg-gray-100">
+  <!-- Mobile Header -->
+  <div class="md:hidden fixed top-0 left-0 right-0 bg-gray-800 text-white z-50">
+    <div class="flex justify-between items-center p-4">
+      <h1 class="text-xl font-bold text-white">WJ Sales</h1>
+      <button (click)="toggleSidebar()" class="text-white focus:outline-none">
+        <i class="fas fa-bars text-xl"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Sidebar Overlay -->
+  @if(isSidebarOpen){
+  <div class="md:hidden fixed inset-0 bg-black bg-opacity-50 z-40" (click)="toggleSidebar()">
+  </div>
+  }
+
+  <!-- Sidebar -->
+  <div [class]="'transform transition-transform duration-300 ease-in-out fixed md:static md:translate-x-0 z-50 ' +
+    (isSidebarOpen ? 'translate-x-0' : '-translate-x-full') +
+    ' w-64 bg-gray-800 text-white h-full md:block'">
+    <div class="h-full flex flex-col justify-between">
+      <div>
+        <div class="text-2xl font-bold p-4 text-center">Panel de Administracion WJ Sales</div>
+        <ul class="space-y-4 px-4 py-6">
+          <li>
+            <a routerLink="/dashboard"
+              class="block text-lg font-medium text-gray-300 hover:text-white transition-colors"
+              (click)="closeSidebarOnMobile()">
+              <i class="fas fa-list mr-2"></i> Lista de Automóviles
+            </a>
+          </li>
+          <li>
+            <a (click)="goToAdd(); closeSidebarOnMobile()"
+              class="block text-lg font-medium text-gray-300 hover:text-white transition-colors cursor-pointer">
+              <i class="fas fa-plus-circle mr-2"></i> Agregar Automóvil
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="p-4 text-center">
+        <span class="text-sm text-gray-400">&copy; 2024 WJ Sales</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex-1 flex flex-col h-screen overflow-hidden">
+    <router-outlet></router-outlet>
+  </div>
+</div>
