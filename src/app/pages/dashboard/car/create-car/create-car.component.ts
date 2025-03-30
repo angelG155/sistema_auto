@@ -7,6 +7,21 @@ import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/fo
 import Swal from 'sweetalert2';
 import { ToastrService } from 'ngx-toastr';
 
+interface CarData {
+  nombre: string;
+  marca: string;
+  modelo: string;
+  anio: number;
+  tipoCarroceria: string;
+  color: string;
+  placas: string;
+  estado: string;
+  descripcion: string;
+  precio: number;
+  caracteristicas: string[];
+  [key: string]: any; // Esto permite indexación con strings
+}
+
 @Component({
   selector: 'app-create-car',
   standalone: true,
@@ -134,15 +149,27 @@ export class CreateCarComponent {
   onSubmit(): void {
     if (this.carForm.valid && this.caracteristicas.length > 0) {
       const formData = new FormData();
-      const carData = {
-        ...this.carForm.value,
+      const carData: CarData = {
+        nombre: this.carForm.get('nombre')?.value,
+        marca: this.carForm.get('marca')?.value,
+        modelo: this.carForm.get('modelo')?.value,
+        anio: this.carForm.get('anio')?.value,
+        tipoCarroceria: this.carForm.get('tipoCarroceria')?.value,
+        color: this.carForm.get('color')?.value,
+        placas: this.carForm.get('placas')?.value,
+        estado: 'Disponible',
+        descripcion: this.carForm.get('descripcion')?.value,
+        precio: this.carForm.get('precio')?.value,
         caracteristicas: this.caracteristicas
       };
 
       // Agregar los datos del carro al FormData
       Object.keys(carData).forEach(key => {
         if (key === 'caracteristicas') {
-          formData.append(key, JSON.stringify(carData[key]));
+          // Agregar cada característica individualmente al FormData
+          carData[key].forEach((caracteristica: string, index: number) => {
+            formData.append(`caracteristicas[${index}]`, caracteristica);
+          });
         } else {
           formData.append(key, carData[key]);
         }
@@ -194,90 +221,6 @@ export class CreateCarComponent {
   closeSidebarOnMobile() {
     if (window.innerWidth < 768) { // 768px es el breakpoint md de Tailwind
       this.isSidebarOpen = false;
-    }
-  }
-
-  private showFormErrors(): void {
-    const controls = this.carForm.controls;
-
-    Object.keys(controls).forEach(key => {
-      const control = controls[key];
-      if (control.errors) {
-        switch(key) {
-          case 'nombre':
-          case 'marca':
-          case 'modelo':
-            if (control.errors['required']) {
-              this.toastr.error(`El ${key} es requerido`);
-            }
-            if (control.errors['maxlength']) {
-              this.toastr.error(`El ${key} no debe exceder los 80 caracteres`);
-            }
-            break;
-
-          case 'anio':
-            if (control.errors['required']) {
-              this.toastr.error('El año es requerido');
-            } else if (control.errors['min']) {
-              this.toastr.error('El año debe ser mayor a 1900');
-            } else if (control.errors['max']) {
-              this.toastr.error(`El año no puede ser mayor a ${new Date().getFullYear()}`);
-            } else if (control.errors['pattern']) {
-              this.toastr.error('El año debe tener 4 dígitos');
-            }
-            break;
-
-          case 'color':
-            if (control.errors['required']) {
-              this.toastr.error('El color es requerido');
-            } else if (control.errors['maxlength']) {
-              this.toastr.error('El color no debe exceder los 20 caracteres');
-            }
-            break;
-
-          case 'placas':
-            if (control.errors['required']) {
-              this.toastr.error('La placa es requerida');
-            } else if (control.errors['maxlength']) {
-              this.toastr.error('La placa no debe exceder los 20 caracteres');
-            }
-            break;
-
-          case 'precio':
-            if (control.errors['required']) {
-              this.toastr.error('El precio es requerido');
-            } else if (control.errors['min']) {
-              this.toastr.error('El precio debe ser mayor a 0');
-            } else if (control.errors['max']) {
-              this.toastr.error('El precio no puede ser mayor a 1,000,000');
-            } else if (control.errors['pattern']) {
-              this.toastr.error('El precio debe ser un número válido con máximo 2 decimales');
-            }
-            break;
-
-          case 'tipoCarroceria':
-            if (control.errors['required']) {
-              this.toastr.error('El tipo de carrocería es requerido');
-            }
-            break;
-
-          case 'descripcion':
-            if (control.errors['required']) {
-              this.toastr.error('La descripción es requerida');
-            }
-            break;
-
-          case 'imagenUrl':
-            if (control.errors['required']) {
-              this.toastr.error('La imagen es requerida');
-            }
-            break;
-        }
-      }
-    });
-
-    if (this.caracteristicas.length === 0) {
-      this.toastr.error('Debe agregar al menos una característica');
     }
   }
 

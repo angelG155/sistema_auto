@@ -26,6 +26,10 @@ export class CarComponent {
     }
   }
 
+  goToList(): void {
+    this.router.navigate(['/dashboard']);
+  }
+
   goToAdd(): void {
     this.router.navigate(['/dashboard/create']);
   }

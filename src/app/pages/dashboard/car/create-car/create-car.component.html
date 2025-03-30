@@ -64,7 +64,7 @@
                   class="p-3 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                 >
                   <option value="">Seleccione un tipo</option>
-                  <option *ngFor="let tipo of tiposCarroceria" [value]="tipo">{{tipo}}</option>
+                  <option *ngFor="let tipo of tiposCarroceria" [value]="tipo">{{tipo | titlecase}}</option>
                 </select>
               </div>
 
@@ -87,12 +87,6 @@
                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
                 >
               </div>
-
-              <!-- Eliminar o comentar esta sección -->
-              <!-- <div class="mb-4">
-                <label for="estado">Estado</label>
-                <input formControlName="estado" ...>
-              </div> -->
             </div>
 
             <!-- Información adicional -->
