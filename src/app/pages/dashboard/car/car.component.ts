@@ -34,6 +34,10 @@ export class CarComponent {
     this.router.navigate(['/dashboard/create']);
   }
 
+  goTohome(): void {
+    this.router.navigate(['/home']);
+  }
+
   logout(): void {
     this.authService.logout();
   }

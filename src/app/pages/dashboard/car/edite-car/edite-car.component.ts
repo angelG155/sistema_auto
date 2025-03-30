@@ -169,4 +169,8 @@ export class EditeCarComponent implements OnInit {
       }
     });
   }
+
+  cancelar(): void {
+    this.router.navigate(['/dashboard']);
+  }
 }
