@@ -7,19 +7,15 @@
                 <div class="tp-login-wrapper">
                    <div class="tp-login-top text-center mb-30">
                       <h3 class="tp-login-title">Iniciar sesión</h3>
-                      <p>¿No tienes una cuenta? <span><a routerLink="/register">Crea una cuenta gratis</a></span></p>
                    </div>
                    <div class="tp-login-option">
-                      <div class="tp-login-mail text-center mb-40">
-                         <p>o Iniciar sesión con <a href="#">Email</a></p>
-                      </div>
                       <div class="tp-login-input-wrapper">
                          <div class="tp-login-input-box">
                             <div class="tp-login-input">
-                               <input id="email" type="email" [(ngModel)]="email" placeholder="gsp@mail.com">
+                               <input id="email" type="email" [(ngModel)]="email" placeholder="Ingresa tu usuario">
                             </div>
                             <div class="tp-login-input-title">
-                               <label for="email">Tú Email</label>
+                               <label for="email">Usuario</label>
                             </div>
                          </div>
                          <div class="tp-login-input-box">
@@ -47,11 +43,6 @@
                             <div class="tp-login-input-title">
                                <label for="tp_password">Contraseña</label>
                             </div>
-                         </div>
-                      </div>
-                      <div class="tp-login-suggetions d-sm-flex align-items-center justify-content-between mb-20">
-                         <div class="tp-login-forgot">
-                            <a routerLink="/cambiar-credenciales">Olvidaste la Contraseña?</a>
                          </div>
                       </div>
                       <div class="tp-login-bottom">

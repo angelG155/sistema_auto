@@ -4,6 +4,7 @@ import { RouterModule, Router } from '@angular/router';
 import { CarService, Car } from '../../../../services/car.service';
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-list-car',
@@ -26,7 +27,8 @@ export class ListCarComponent {
 
   constructor(
     private carService: CarService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -161,7 +163,26 @@ export class ListCarComponent {
     }
   }
 
+  changeTopSales(id: number, currentTopSales: boolean) {
 
+    const newTopSales: boolean = !currentTopSales;
+
+    this.carService.changeTopSales(id, newTopSales).subscribe({
+      next: (response) => {
+        this.toastr.success(`Vehículo ${newTopSales ? 'agregado a' : 'removido de'} Top Sales`);
+        this.loadCars(); // Recargar la lista
+      },
+      error: (error) => {
+        this.toastr.error('Error al cambiar el estado de Top Sales');
+        console.error('Error:', error, 'ID:', id, 'Estado actual:', newTopSales);
+      }
+    });
+  }
+
+  handleTopSalesClick(car: Car) {
+    console.log('Objeto car completo:', car);
+    this.changeTopSales(car.id!, car.top_sales);
+  }
 
   goToEdit(id: number): void {
     this.router.navigate(['/dashboard/edit', id]);

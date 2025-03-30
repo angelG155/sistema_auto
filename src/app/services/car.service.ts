@@ -17,6 +17,7 @@ export interface Car {
   precio: string;
   imagenUrlCompleta: string;
   caracteristicas: string[];
+  top_sales: boolean;
 }
 
 @Injectable({
@@ -54,5 +55,9 @@ export class CarService {
   getCarshome() {
     const url = `${URL_SERVICIOS}/autos`;
     return this.http.get(url);
+  }
+
+  changeTopSales(id: number, topSales: boolean) {
+    return this.http.patch<Car>(`${this.apiUrl}/${id}/top-sales`, { top_sales: topSales });
   }
 }

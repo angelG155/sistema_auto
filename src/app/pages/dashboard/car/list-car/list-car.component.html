@@ -90,6 +90,7 @@
               <th class="hidden md:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sticky top-0 bg-gray-50">Año</th>
               <th class="hidden md:table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sticky top-0 bg-gray-50">Descripción</th>
               <th class="px-4 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sticky top-0 bg-gray-50">Estado</th>
+              <th class="px-4 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sticky top-0 bg-gray-50">Top Sales</th>
               <th class="px-4 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sticky top-0 bg-gray-50">Precio</th>
               <th class="px-4 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sticky top-0 bg-gray-50">Acciones</th>
             </tr>
@@ -127,6 +128,14 @@
                   {{ car.estado === 'disponible' ? 'Disponible' :
                      car.estado === 'vendido' ? 'Vendido' :
                      car.estado === 'mantenimiento' ? 'En mantenimiento' : car.estado }}
+                </button>
+              </td>
+              <td class="px-4 md:px-6 py-4 whitespace-nowrap">
+                <button
+                  (click)="handleTopSalesClick(car)"
+                  [class]="car.top_sales ? 'bg-blue-500' : 'bg-gray-500'"
+                  class="px-3 py-1 rounded-full text-white text-sm">
+                  {{ car.top_sales ? 'Top Sales' : 'Regular' }}
                 </button>
               </td>
               <td class="px-4 md:px-6 py-4 whitespace-nowrap">{{ car.precio }}</td>

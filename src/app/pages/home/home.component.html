@@ -17,7 +17,7 @@
       <div class="car-grid">
         @for (car of cars; track car.nombre; let index = $index) {
 
-        @if (index === 0) {
+        @if (car.top_sales) {
         <!-- Featured Car - Newest Toyota -->
         <div class="car-card featured-car" #cardElement>
           <img [src]="car.imagenUrlCompleta" [alt]="car.nombre" class="car-image">
@@ -34,9 +34,7 @@
             </a>
           </div>
         </div>
-        }
-
-        @if (index !== 0) {
+        }@else {
         <div class="car-card" #cardElement>
           <img [src]="car.imagenUrlCompleta" [alt]="car.nombre" class="car-image">
           <div class="car-details">
