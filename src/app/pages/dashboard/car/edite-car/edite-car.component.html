@@ -9,41 +9,80 @@
           </button>
         </div>
 
-        <form>
+        <form #carForm="ngForm">
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             <!-- Información básica -->
             <div class="space-y-4">
               <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700">Nombre</label>
-                <input [(ngModel)]="nombre"
-                  type="text" name="nombre" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                <input [(ngModel)]="nombre" name="nombre" required maxlength="80"
+                  type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                  #nombreInput="ngModel"
+                  [ngClass]="{'border-red-500': nombreInput.invalid && nombreInput.touched}">
+                @if (nombreInput.invalid && nombreInput.touched) {
+                  <div class="text-red-500 text-sm mt-1">
+                    @if (nombreInput.errors?.['required']) {
+                      <span>El nombre es requerido</span>
+                    }
+                    @if (nombreInput.errors?.['maxlength']) {
+                      <span>El nombre no debe exceder 80 caracteres</span>
+                    }
+                  </div>
+                }
               </div>
 
               <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700">Marca</label>
-                <input [(ngModel)]="marca"
-                  type="text"
-                  name="marca"
-                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                >
+                <input [(ngModel)]="marca" name="marca" required maxlength="80"
+                  type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                  #marcaInput="ngModel"
+                  [ngClass]="{'border-red-500': marcaInput.invalid && marcaInput.touched}">
+                @if (marcaInput.invalid && marcaInput.touched) {
+                  <div class="text-red-500 text-sm mt-1">
+                    @if (marcaInput.errors?.['required']) {
+                      <span>La marca es requerida</span>
+                    }
+                    @if (marcaInput.errors?.['maxlength']) {
+                      <span>La marca no debe exceder 80 caracteres</span>
+                    }
+                  </div>
+                }
               </div>
 
               <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700">Modelo</label>
-                <input [(ngModel)]="modelo"
-                  type="text"
-                  name="modelo"
-                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                >
+                <input [(ngModel)]="modelo" name="modelo" required maxlength="80"
+                  type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                  #modeloInput="ngModel"
+                  [ngClass]="{'border-red-500': modeloInput.invalid && modeloInput.touched}">
+                @if (modeloInput.invalid && modeloInput.touched) {
+                  <div class="text-red-500 text-sm mt-1">
+                    @if (modeloInput.errors?.['required']) {
+                      <span>El modelo es requerido</span>
+                    }
+                    @if (modeloInput.errors?.['maxlength']) {
+                      <span>El modelo no debe exceder 80 caracteres</span>
+                    }
+                  </div>
+                }
               </div>
 
               <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700">Año</label>
-                <input [(ngModel)]="anio"
-                  type="number"
-                  name="anio"
-                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                >
+                <input [(ngModel)]="anio" name="anio" required min="1900" [max]="maxYear"
+                  type="number" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                  #anioInput="ngModel"
+                  [ngClass]="{'border-red-500': anioInput.invalid && anioInput.touched}">
+                @if (anioInput.invalid && anioInput.touched) {
+                  <div class="text-red-500 text-sm mt-1">
+                    @if (anioInput.errors?.['required']) {
+                      <span>El año es requerido</span>
+                    }
+                    @if (anioInput.errors?.['min'] || anioInput.errors?.['max']) {
+                      <span>El año debe estar entre 1900 y {{maxYear}}</span>
+                    }
+                  </div>
+                }
               </div>
             </div>
 
@@ -51,71 +90,108 @@
             <div class="space-y-4">
               <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700">Tipo de Carrocería</label>
-                <select
-                  [(ngModel)]="carroceria"
-                  name="tipoCarroceria"
+                <select [(ngModel)]="carroceria" name="tipoCarroceria" required
                   class="p-3 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                >
+                  #carroceriaInput="ngModel"
+                  [ngClass]="{'border-red-500': carroceriaInput.invalid && carroceriaInput.touched}">
                   <option value="">Seleccione un tipo</option>
                   @for (tipo of tiposCarroceria; track tipo) {
                   <option [value]="tipo">{{tipo}}</option>
                   }
                 </select>
+                @if (carroceriaInput.invalid && carroceriaInput.touched) {
+                  <div class="text-red-500 text-sm mt-1">
+                    <span>El tipo de carrocería es requerido</span>
+                  </div>
+                }
               </div>
 
               <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700">Color</label>
-                <input [(ngModel)]="color"
-                  type="text"
-                  name="color"
-                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                >
+                <input [(ngModel)]="color" name="color" required maxlength="20"
+                  type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                  #colorInput="ngModel"
+                  [ngClass]="{'border-red-500': colorInput.invalid && colorInput.touched}">
+                @if (colorInput.invalid && colorInput.touched) {
+                  <div class="text-red-500 text-sm mt-1">
+                    @if (colorInput.errors?.['required']) {
+                      <span>El color es requerido</span>
+                    }
+                    @if (colorInput.errors?.['maxlength']) {
+                      <span>El color no debe exceder 20 caracteres</span>
+                    }
+                  </div>
+                }
               </div>
 
               <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700">Placas</label>
-                <input [(ngModel)]="placas"
-                  type="text"
-                  name="placas"
-                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                >
+                <input [(ngModel)]="placas" name="placas" required maxlength="20"
+                  type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                  #placasInput="ngModel"
+                  [ngClass]="{'border-red-500': placasInput.invalid && placasInput.touched}">
+                @if (placasInput.invalid && placasInput.touched) {
+                  <div class="text-red-500 text-sm mt-1">
+                    @if (placasInput.errors?.['required']) {
+                      <span>Las placas son requeridas</span>
+                    }
+                    @if (placasInput.errors?.['maxlength']) {
+                      <span>Las placas no deben exceder 20 caracteres</span>
+                    }
+                  </div>
+                }
               </div>
-
-              <!-- Eliminar o comentar esta sección -->
-              <!-- <div class="mb-4">
-                <label for="estado">Estado</label>
-                <input formControlName="estado" ...>
-              </div> -->
             </div>
 
             <!-- Información adicional -->
             <div class="col-span-1 md:col-span-2 space-y-4">
               <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700">Descripción</label>
-                <textarea
-                  [(ngModel)]="descripcion"
-                  name="descripcion"
-                  rows="6"
-                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm md:text-base min-h-[150px] resize-y"
-                  placeholder="Ingrese una descripción del vehículo"
-                ></textarea>
+                <textarea [(ngModel)]="descripcion" name="descripcion" required minlength="30" maxlength="500"
+                  rows="6" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm md:text-base min-h-[150px] resize-y"
+                  #descripcionInput="ngModel"
+                  [ngClass]="{'border-red-500': descripcionInput.invalid && descripcionInput.touched}"
+                  placeholder="Ingrese una descripción del vehículo"></textarea>
+                @if (descripcionInput.invalid && descripcionInput.touched) {
+                  <div class="text-red-500 text-sm mt-1">
+                    @if (descripcionInput.errors?.['required']) {
+                      <span>La descripción es requerida</span>
+                    }
+                    @if (descripcionInput.errors?.['minlength']) {
+                      <span>La descripción debe tener al menos 30 caracteres</span>
+                    }
+                    @if (descripcionInput.errors?.['maxlength']) {
+                      <span>La descripción no debe exceder 500 caracteres</span>
+                    }
+                  </div>
+                }
               </div>
 
               <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700">Precio</label>
-                <input [(ngModel)]="precio"
-                  type="number"
-                  name="precio"
-                  step="0.01"
-                  min="0"
-                  max="1000000"
-                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                >
+                <input [(ngModel)]="precio" name="precio" required min="0" max="1000000"
+                  type="number" step="0.01" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                  #precioInput="ngModel"
+                  [ngClass]="{'border-red-500': precioInput.invalid && precioInput.touched}">
+                @if (precioInput.invalid && precioInput.touched) {
+                  <div class="text-red-500 text-sm mt-1">
+                    @if (precioInput.errors?.['required']) {
+                      <span>El precio es requerido</span>
+                    }
+                    @if (precioInput.errors?.['min']) {
+                      <span>El precio debe ser mayor a 0</span>
+                    }
+                    @if (precioInput.errors?.['max']) {
+                      <span>El precio no puede ser mayor a 1,000,000</span>
+                    }
+                  </div>
+                }
               </div>
 
               <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700">URL de la Imagen</label>
-                <input type="file" accept="image/*" (change)="capturarFile($event)">
+                <input type="file" accept="image/*" (change)="capturarFile($event)"
+                  class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
               </div>
 
               <div>
@@ -126,28 +202,22 @@
                       <input
                         type="text"
                         [(ngModel)]="textCaracter"
-                        name="caracteristicas"
+                        name="textCaracter"
                         (keyup.enter)="addCharacteristics(textCaracter)"
                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm md:text-base"
-                        placeholder="Añadir característica"
-                      >
-                      <button
-                        type="button"
-                        (click)="addCharacteristics(textCaracter)"
-                        class="mt-1 px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition-colors text-sm md:text-base hidden"
-                      >
-                        Ingresar
-                      </button>
+                        placeholder="Añadir característica">
                     </div>
                   </div>
                   <div>
                     <div class="contenedor-carac mt-1 bg-white">
-                      <span *ngFor="let text of caracteristicas; let i = index" class="listado-caracteristicas inline-flex items-center">
-                        {{ text }}
-                        <button type="button" (click)="deleteCharacteristics(i)" class="btn-close-p ml-2">
+                      @for (caracteristica of caracteristicas; track caracteristica; let i = $index) {
+                      <span class="listado-caracteristicas inline-flex items-center bg-gray-100 rounded-full px-3 py-1 text-sm font-medium text-gray-800 mr-2 mb-2">
+                        {{ caracteristica }}
+                        <button type="button" (click)="deleteCharacteristics(i)" class="ml-2 text-gray-500 hover:text-gray-700">
                           ×
                         </button>
                       </span>
+                      }
                     </div>
                   </div>
                 </div>
@@ -156,10 +226,10 @@
           </div>
 
           <div class="flex justify-end gap-4 mt-4">
-
             <button
               (click)="updateCar()"
               type="button"
+              [disabled]="carForm.invalid"
               class="px-4 py-2 text-white bg-blue-600 rounded-md hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed">
               Actualizar Vehículo
             </button>

@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { CarService, Car } from '../../../../services/car.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+
 @Component({
   selector: 'app-edite-car',
   standalone: true,
@@ -11,10 +12,8 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './edite-car.component.html',
   styleUrl: './edite-car.component.css'
 })
-export class EditeCarComponent {
-
+export class EditeCarComponent implements OnInit {
   id: number = 0;
-
   nombre: string = '';
   marca: string = '';
   modelo: string = '';
@@ -29,13 +28,16 @@ export class EditeCarComponent {
   tiposCarroceria = ['sedan', 'suv', 'hatchback', 'pickup', 'van', 'coupe', 'wagon', 'convertible', 'truck'];
   selectedFile: File | null = null;
   textCaracter: string = '';
+  maxYear = new Date().getFullYear();
 
-  constructor(private toastr: ToastrService,
+  constructor(
+    private toastr: ToastrService,
     private route: ActivatedRoute,
-    private carService: CarService) { }
+    private router: Router,
+    private carService: CarService
+  ) { }
 
   ngOnInit(): void {
-
     this.route.params.subscribe(params => {
       this.id = params['id'];
     });
@@ -51,47 +53,80 @@ export class EditeCarComponent {
       this.descripcion = car.descripcion;
       this.precio = parseFloat(car.precio);
       this.imagenUrl = car.imagenUrlCompleta;
-
       this.caracteristicas = car.caracteristicas;
     });
   }
 
-  addCharacteristics(text:string){
-
-    if (text != "") {
-      this.caracteristicas.push(text);
-      this.textCaracter = "";
-    }else{
-      this.toastr.info('El campo no puede estar vacio');
+  validateFields(): boolean {
+    if (!this.nombre || this.nombre.length > 80) {
+      this.toastr.error('El nombre es requerido y no debe exceder 80 caracteres');
+      return false;
     }
-
+    if (!this.marca || this.marca.length > 80) {
+      this.toastr.error('La marca es requerida y no debe exceder 80 caracteres');
+      return false;
+    }
+    if (!this.modelo || this.modelo.length > 80) {
+      this.toastr.error('El modelo es requerido y no debe exceder 80 caracteres');
+      return false;
+    }
+    if (!this.anio || this.anio < 1900 || this.anio > new Date().getFullYear()) {
+      this.toastr.error('El año debe estar entre 1900 y el año actual');
+      return false;
+    }
+    if (!this.carroceria) {
+      this.toastr.error('El tipo de carrocería es requerido');
+      return false;
+    }
+    if (!this.color || this.color.length > 20) {
+      this.toastr.error('El color es requerido y no debe exceder 20 caracteres');
+      return false;
+    }
+    if (!this.placas || this.placas.length > 20) {
+      this.toastr.error('Las placas son requeridas y no deben exceder 20 caracteres');
+      return false;
+    }
+    if (!this.descripcion || this.descripcion.length < 30 || this.descripcion.length > 500) {
+      this.toastr.error('La descripción debe tener entre 30 y 500 caracteres');
+      return false;
+    }
+    if (!this.precio || this.precio <= 0 || this.precio > 1000000) {
+      this.toastr.error('El precio debe estar entre 0 y 1,000,000');
+      return false;
+    }
+    if (this.caracteristicas.length === 0) {
+      this.toastr.error('Debe agregar al menos una característica');
+      return false;
+    }
+    return true;
   }
 
-  capturarFile(event: Event){
-    //mapear el input
-    const input = event.target as HTMLInputElement;
+  addCharacteristics(text: string) {
+    if (text && text.trim() !== '') {
+      this.caracteristicas.push(text.trim());
+      this.textCaracter = '';
+    } else {
+      this.toastr.info('El campo no puede estar vacío');
+    }
+  }
 
+  capturarFile(event: Event) {
+    const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
-
-      // Verifica que el tipo MIME sea una imagen
       if (!file.type.startsWith('image/')) {
         this.toastr.error('Solo se permiten archivos de imagen.');
-        this.selectedFile = null;  // Reinicia la selección de archivos
+        this.selectedFile = null;
         return;
       }
-
-      // Verifica el tamaño del archivo (máximo 5MB)
       const maxSizeInMB = 5;
       if (file.size > maxSizeInMB * 1024 * 1024) {
         this.toastr.error(`El tamaño del archivo no debe exceder los ${maxSizeInMB} MB.`);
-        this.selectedFile = null;  // Reinicia la selección de archivos
+        this.selectedFile = null;
         return;
       }
-
-      this.selectedFile = file;  // Guarda el archivo seleccionado
+      this.selectedFile = file;
     }
-
   }
 
   deleteCharacteristics(index: number): void {
@@ -99,9 +134,11 @@ export class EditeCarComponent {
   }
 
   updateCar(): void {
-    const formData = new FormData();
+    if (!this.validateFields()) {
+      return;
+    }
 
-    // Agregar cada campo individualmente
+    const formData = new FormData();
     formData.append('nombre', this.nombre);
     formData.append('marca', this.marca);
     formData.append('modelo', this.modelo);
@@ -113,7 +150,6 @@ export class EditeCarComponent {
     formData.append('descripcion', this.descripcion);
     formData.append('precio', this.precio.toString());
 
-    // Enviar cada característica como un elemento separado del array
     this.caracteristicas.forEach((caracteristica, index) => {
       formData.append(`caracteristicas[${index}]`, caracteristica);
     });
@@ -125,12 +161,12 @@ export class EditeCarComponent {
     this.carService.updateCar(this.id, formData).subscribe({
       next: (response) => {
         this.toastr.success('Automóvil actualizado correctamente');
+        this.router.navigate(['/dashboard']);
       },
       error: (error) => {
-        this.toastr.error('Error al actualizar el automóvil' + error.error.error);
+        this.toastr.error('Error al actualizar el automóvil: ' + error.error.error);
         console.error('Error:', error);
       }
     });
   }
-
 }
