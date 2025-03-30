@@ -10,7 +10,7 @@ export class HomeService {
   constructor(private http: HttpClient) { }
 
   getCars() {
-    const url = `${URL_SERVICIOS}/autos`;
+    const url = `${URL_SERVICIOS}/autos/disponibles`;
     return this.http.get(url);
   }
 }

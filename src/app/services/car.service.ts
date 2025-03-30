@@ -39,8 +39,8 @@ export class CarService {
     return this.http.post<Car>(`${this.apiUrl}`, data);
   }
 
-  updateCar(id: number, car: Car): Observable<Car> {
-    return this.http.put<Car>(`${this.apiUrl}/${id}`, car);
+  updateCar(id: number, data: FormData): Observable<Car> {
+    return this.http.put<Car>(`${this.apiUrl}/${id}`, data);
   }
 
   deleteCar(id: number): Observable<void> {

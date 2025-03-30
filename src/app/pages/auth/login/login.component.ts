@@ -68,20 +68,17 @@ export class LoginComponent {
       return;
     }
 
-    this.authService.login(this.email,this.password).subscribe((resp:any) => {
-      console.log(resp);
-      if(resp.error && resp.error.error == 'Unauthorized'){
-        this.toastr.error("Validacion",'Las credenciales son incorrectas');
-        return;
+    this.authService.login(this.email,this.password).subscribe({
+      next: (response) => {
+        if(response) {
+          this.toastr.success('Bienvenido');
+          this.router.navigateByUrl('/dashboard');
+        }
+      },
+      error: (error) => {
+        this.toastr.error('Credenciales incorrectas');
       }
-      if(resp == true){
-        window.location.reload();
-      }
-
-
-    },(error) => {
-      console.log(error);
-    })
+    });
   }
 
 }

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CarService } from '../../../services/car.service';
 import { RouterOutlet } from '@angular/router';
 import { Router } from '@angular/router';
-
+import { AuthService } from '../../auth/service/auth.service';
 
 @Component({
   selector: 'app-car',
@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 export class CarComponent {
   isSidebarOpen = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   toggleSidebar(): void {
     this.isSidebarOpen = !this.isSidebarOpen;
@@ -34,4 +34,7 @@ export class CarComponent {
     this.router.navigate(['/dashboard/create']);
   }
 
+  logout(): void {
+    this.authService.logout();
+  }
 }

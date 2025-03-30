@@ -8,20 +8,15 @@ export class PermisionAuth {
     public authService: AuthService,
     public router: Router,
   ) {
-    console.log("aqui pso");
+
   }
   canActive(): boolean {
-    if(!this.authService.user || !this.authService.token){
-      this.router.navigateByUrl("");
-      return false;
-    }
-    let token = this.authService.token;
-    let expiration = (JSON.parse(atob(token.split(".")[1]))).exp;
-    if(Math.floor((new Date).getTime() / 1000)  > expiration){
-      this.authService.logout();
 
+    if(!this.authService.user ){
+      this.router.navigateByUrl("login");
       return false;
     }
+
     return true;
   }
 }

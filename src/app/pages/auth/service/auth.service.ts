@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, afterNextRender } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, map, of } from 'rxjs';
+import { catchError, map, of, Observable, tap } from 'rxjs';
 import { URL_SERVICIOS } from '../../../config/config';
 
 @Injectable({
@@ -20,46 +20,43 @@ export class AuthService {
     })
   }
 
-  // initAuth(){
-  //   if(localStorage.getItem("token")){
-  //     this.user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user") ?? '') : null;
-  //     this.token = localStorage.getItem("token")+"";
-  //   }
-  // }
-
   initAuth() {
-    if (typeof window !== 'undefined' && localStorage.getItem("token")) {
+    if (typeof window !== 'undefined') {
         this.user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user") ?? '') : null;
-        this.token = localStorage.getItem("token") ?? '';
     }
   }
 
 
-  login(email:string,password:string) {
+  login(email: string, password: string): Observable<any> {
+    if (email === 'admin' && password === 'admin') {
+      const mockResponse = {
+        user: {
+          email: email,
+          role: 'admin'
+        },
+        token: 'mock-token-123'
+      };
 
-    let URL = URL_SERVICIOS+"/auth/login";
+      localStorage.setItem('token', mockResponse.token);
+      localStorage.setItem('user', JSON.stringify(mockResponse.user));
+      this.user = mockResponse.user;
 
-    return this.http.post(URL,{email,password}).pipe(
-      map((resp:any) => {
-        console.log(resp);
-        const result = this.saveLocalStorage(resp);
-        return result;
-      }),
-      catchError((err:any) => {
-        console.log(err);
-        return of(err);
+      return of(mockResponse);
+    }
+
+    return of(null).pipe(
+      tap(() => {
+        throw new Error('Credenciales incorrectas');
       })
-    )
+    );
   }
 
   saveLocalStorage(resp:any){
-    if(resp && resp.access_token){
-      localStorage.setItem("token",resp.access_token);
-      localStorage.setItem("user",JSON.stringify(resp.user));
-      this.token = localStorage.getItem("token")+"";
-
+    if(resp){
+      localStorage.setItem("user",JSON.stringify(resp));
       return true;
     }
+    console.log("no se guardo");
     return false;
   }
 
