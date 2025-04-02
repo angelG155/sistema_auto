@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HomeService } from './service/home.service';
 import { CarService, Car } from '../../services/car.service';
 
+
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -10,36 +11,95 @@ import { CarService, Car } from '../../services/car.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements AfterViewInit {
+export class HomeComponent {
   @ViewChildren('cardElement') cardElements!: QueryList<ElementRef>;
 
-  constructor(private homeService: HomeService) { }
-
   cars: Car[] = [];
+  cartopsales: number = 0;
   phone: string = '13083891551';
+  selectedCar: Car | null = null;
+  showModal = false;
+
+  currentIndex = 0;
+  isAutoPlaying = true;
+  private intervalId: any;
+
+  constructor(private homeService: HomeService) { }
 
   ngOnInit() {
     this.homeService.getCars().subscribe((cars: any) => {
       this.cars = cars;
+      this.cartopsales = this.cars.filter(car => car.top_sales).length;
     });
   }
 
-  ngAfterViewInit() {
-    if (typeof window !== 'undefined') {
-      this.cardElements.forEach(cardRef => {
-        const card = cardRef.nativeElement;
-        card.addEventListener('mousemove', (e: MouseEvent) => this.handleHover(e, card));
-        card.addEventListener('mouseleave', (e: MouseEvent) => this.resetCard(e, card));
-      });
+  getSlideStyle(index: number): any {
+    const offset = index - this.currentIndex;
+    const isActive = index === this.currentIndex;
+
+    return {
+      transform: `
+        translate(-50%, -50%)
+        translateX(${offset * 70}%)
+        translateZ(${isActive ? 0 : -500}px)
+        rotateY(${offset * 45}deg)
+        scale(${isActive ? 1 : 0.8})
+      `,
+      opacity: isActive ? 1 : 0.6,
+      zIndex: isActive ? 1 : 0
+    };
+  }
+
+  goToSlide(index: number): void {
+    this.currentIndex = index;
+  }
+
+  goToPrevious(): void {
+    this.currentIndex = (this.currentIndex - 1 + this.cartopsales) % this.cartopsales;
+  }
+
+  goToNext(): void {
+    this.currentIndex = (this.currentIndex + 1) % this.cartopsales;
+  }
+
+  setIsAutoPlaying(value: boolean): void {
+    this.isAutoPlaying = value;
+    if (value) {
+      this.startAutoPlay();
+    } else {
+      this.stopAutoPlay();
     }
   }
 
-  contact() {
-    alert('¡Gracias por elegir WJ Sales! Por favor llama al +(308)-389-1551 para asistencia inmediata.');
+  private startAutoPlay(): void {
+    if (this.isAutoPlaying) {
+      this.intervalId = setInterval(() => {
+        this.currentIndex = (this.currentIndex + 1) % this.cartopsales;
+      }, 5000);
+    }
+  }
+
+  private stopAutoPlay(): void {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+  }
+
+  openCarModal(car: Car) {
+    this.selectedCar = car;
+    this.showModal = true;
+    document.body.style.overflow = 'hidden';
+  }
+
+  closeModal() {
+    this.showModal = false;
+    this.selectedCar = null;
+    document.body.style.overflow = 'auto';
   }
 
   onWhatsAppClick(car: Car, event: Event) {
     event.preventDefault();
+    event.stopPropagation();
     const phone = this.phone;
     const message = `Hola William, me interesa el ${car.nombre} que vi en su página web con precio de ${car.precio}. ¿Podría darme más información?`;
     const whatsappUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
@@ -48,51 +108,4 @@ export class HomeComponent implements AfterViewInit {
     }
   }
 
-  private handleHover(e: MouseEvent, card: HTMLElement) {
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    const rotateX = (y - centerY) / 20;
-    const rotateY = (centerX - x) / 20;
-
-    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
-    card.style.transition = 'transform 0.1s';
-
-    this.updateShineEffect(card, x, y, rect.width, rect.height);
-  }
-
-  private resetCard(e: MouseEvent, card: HTMLElement) {
-    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
-    card.style.transition = 'transform 0.5s';
-
-    const shine = card.querySelector('.shine');
-    if (shine) {
-      shine.remove();
-    }
-  }
-
-  private updateShineEffect(card: HTMLElement, x: number, y: number, width: number, height: number) {
-    let shine = card.querySelector('.shine') as HTMLElement;
-
-    if (!shine) {
-      shine = document.createElement('div');
-      shine.className = 'shine';
-      shine.style.position = 'absolute';
-      shine.style.top = '0';
-      shine.style.left = '0';
-      shine.style.right = '0';
-      shine.style.bottom = '0';
-      shine.style.background = 'linear-gradient(45deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.5) 50%, rgba(255,255,255,0) 100%)';
-      shine.style.pointerEvents = 'none';
-      shine.style.opacity = '0.6';
-      card.appendChild(shine);
-    }
-
-    const moveX = ((x / width) * 200) - 100;
-    const moveY = ((y / height) * 200) - 100;
-    shine.style.transform = `translate(${moveX}%, ${moveY}%) rotate(45deg)`;
-  }
 }

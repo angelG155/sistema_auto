@@ -47,7 +47,6 @@ header p {
 
 .showcase-intro {
   text-align: center;
-  margin-bottom: 3rem;
 }
 
 .showcase-intro h2 {
@@ -57,7 +56,7 @@ header p {
 }
 
 .showcase-intro p {
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   color: #333;
   max-width: 800px;
   margin: 0 auto;
@@ -82,11 +81,12 @@ header p {
   border: 1px solid rgba(0,0,0,0.1);
   position: relative;
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .car-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 20px 30px rgba(0,0,0,0.2);
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.15);
 }
 
 .car-image {
@@ -171,7 +171,6 @@ footer {
   background: #000000;
   color: white;
   padding: 2rem 0;
-  margin-top: 4rem;
 }
 
 footer p {
@@ -342,4 +341,102 @@ footer p {
   .featured-car .car-image {
       height: 250px;
   }
+
+  .modal-dialog {
+    margin: 1rem;
+  }
+
+  .modal-body {
+    padding: 1rem;
+  }
+
+  .display-6 {
+    font-size: 1.75rem;
+  }
+
+  .fs-3 {
+    font-size: 1.25rem;
+  }
 }
+
+ /* Custom CSS to complement Bootstrap */
+ .rounded-3 {
+  border-radius: 0.75rem;
+}
+
+.rounded-4 {
+  border-radius: 1rem;
+}
+
+.object-fit-cover {
+  object-fit: cover;
+}
+
+/* Button hover effect */
+.btn.position-relative:hover .position-absolute {
+  transform: translateX(200%) !important;
+}
+
+.btn.position-relative:hover {
+  background-image: linear-gradient(to right, #20BD5A, #1CAD52) !important;
+  box-shadow: 0 0 25px rgba(37,211,102,0.25);
+}
+
+/* Card shadow */
+.card.shadow {
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1) !important;
+}
+
+.card.shadow:hover {
+  box-shadow: 0 15px 30px rgba(0,0,0,0.15) !important;
+}
+
+.h4{
+  color: white;
+}
+
+.h3{
+  color: white;
+}
+
+/* Estilos del Modal */
+.modal {
+  animation: modalFadeIn 0.3s ease-out;
+}
+
+.modal-backdrop {
+  animation: backdropFadeIn 0.3s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes backdropFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modal-content {
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+.modal-dialog {
+  margin: 1.75rem auto;
+}
+
+.modal-body {
+  background: white;
+}
+
