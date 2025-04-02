@@ -18,6 +18,7 @@ interface CarData {
   estado: string;
   descripcion: string;
   precio: number;
+  millas: number;
   caracteristicas: string[];
   [key: string]: any; // Esto permite indexación con strings
 }
@@ -88,6 +89,12 @@ export class CreateCarComponent {
         Validators.required,
         Validators.minLength(30),
         Validators.maxLength(500)
+      ]],
+      millas: ['', [
+        Validators.required,
+        Validators.min(0),
+        Validators.max(500000),
+        Validators.pattern('^[0-9]+$')
       ]],
       precio: ['', [
         Validators.required,
@@ -160,6 +167,7 @@ export class CreateCarComponent {
         estado: 'Disponible',
         descripcion: this.carForm.get('descripcion')?.value,
         precio: this.carForm.get('precio')?.value,
+        millas: this.carForm.get('millas')?.value,
         caracteristicas: this.caracteristicas
       };
 
@@ -255,6 +263,16 @@ export class CreateCarComponent {
             }
             break;
 
+          case 'millas':
+            if (control.errors['required']) {
+              this.toastr.warning('El millaje es requerido');
+            } else if (control.errors['min']) {
+              this.toastr.warning('El millaje debe ser mayor a 0');
+            } else if (control.errors['pattern']) {
+              this.toastr.warning('El millaje debe ser un número entero');
+            }
+            break;
+
           case 'color':
             if (control.errors['required']) {
               this.toastr.warning('El color es requerido');
@@ -295,7 +313,7 @@ export class CreateCarComponent {
             } else if (control.errors['minlength']) {
               this.toastr.warning('La descripción debe tener al menos 30 caracteres');
             } else if (control.errors['maxlength']) {
-              this.toastr.warning('La descripción no debe exceder los 500 caracteres');
+              this.toastr.warning('La descripción no debe exceder los 1000 caracteres');
             }
             break;
 
@@ -358,3 +376,5 @@ export class CreateCarComponent {
   }
 
 }
+
+

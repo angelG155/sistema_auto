@@ -23,6 +23,7 @@ export class EditeCarComponent implements OnInit {
   placas: string = '';
   descripcion: string = '';
   precio: number = 0;
+  millas: number = 0;
   caracteristicas: string[] = [];
   imagenUrl: string = '';
   tiposCarroceria = ['sedan', 'suv', 'hatchback', 'pickup', 'van', 'coupe', 'wagon', 'convertible', 'truck'];
@@ -52,6 +53,7 @@ export class EditeCarComponent implements OnInit {
       this.placas = car.placas;
       this.descripcion = car.descripcion;
       this.precio = parseFloat(car.precio);
+      this.millas = car.millas;
       this.imagenUrl = car.imagenUrlCompleta;
       this.caracteristicas = car.caracteristicas;
     });
@@ -86,8 +88,12 @@ export class EditeCarComponent implements OnInit {
       this.toastr.error('Las placas son requeridas y no deben exceder 20 caracteres');
       return false;
     }
-    if (!this.descripcion || this.descripcion.length < 30 || this.descripcion.length > 500) {
-      this.toastr.error('La descripción debe tener entre 30 y 500 caracteres');
+    if (!this.descripcion || this.descripcion.length < 30 || this.descripcion.length > 1000) {
+      this.toastr.error('La descripción debe tener entre 30 y 1000 caracteres');
+      return false;
+    }
+    if (!this.millas || this.millas < 0) {
+      this.toastr.error('El millaje debe ser mayor a 0');
       return false;
     }
     if (!this.precio || this.precio <= 0 || this.precio > 1000000) {
@@ -149,6 +155,7 @@ export class EditeCarComponent implements OnInit {
     formData.append('estado', 'Disponible');
     formData.append('descripcion', this.descripcion);
     formData.append('precio', this.precio.toString());
+    formData.append('millas', this.millas.toString());
 
     this.caracteristicas.forEach((caracteristica, index) => {
       formData.append(`caracteristicas[${index}]`, caracteristica);

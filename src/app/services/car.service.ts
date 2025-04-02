@@ -13,6 +13,7 @@ export interface Car {
   color: string;
   placas: string;
   estado: string;
+  millas: number;
   descripcion: string;
   precio: string;
   imagenUrlCompleta: string;

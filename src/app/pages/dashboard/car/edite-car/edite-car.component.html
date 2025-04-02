@@ -141,13 +141,31 @@
                   </div>
                 }
               </div>
+
+              <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700">Millas</label>
+                <input [(ngModel)]="millas" name="millas" required min="0"
+                  type="number" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                  #millasInput="ngModel"
+                  [ngClass]="{'border-red-500': millasInput.invalid && millasInput.touched}">
+                @if (millasInput.invalid && millasInput.touched) {
+                  <div class="text-red-500 text-sm mt-1">
+                    @if (millasInput.errors?.['required']) {
+                      <span>El millaje es requerido</span>
+                    }
+                    @if (millasInput.errors?.['min']) {
+                      <span>El millaje debe ser mayor a 0</span>
+                    }
+                  </div>
+                }
+              </div>
             </div>
 
             <!-- Información adicional -->
             <div class="col-span-1 md:col-span-2 space-y-4">
               <div class="mb-4">
                 <label class="block text-sm font-medium text-gray-700">Descripción</label>
-                <textarea [(ngModel)]="descripcion" name="descripcion" required minlength="30" maxlength="500"
+                <textarea [(ngModel)]="descripcion" name="descripcion" required minlength="30"
                   rows="6" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm md:text-base min-h-[150px] resize-y"
                   #descripcionInput="ngModel"
                   [ngClass]="{'border-red-500': descripcionInput.invalid && descripcionInput.touched}"
@@ -159,9 +177,6 @@
                     }
                     @if (descripcionInput.errors?.['minlength']) {
                       <span>La descripción debe tener al menos 30 caracteres</span>
-                    }
-                    @if (descripcionInput.errors?.['maxlength']) {
-                      <span>La descripción no debe exceder 500 caracteres</span>
                     }
                   </div>
                 }

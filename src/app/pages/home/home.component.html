@@ -1,10 +1,17 @@
 <div class="principal">
-  <header style="display: flex; justify-content: space-between;">
+  <header style="display: flex; justify-content: space-between; position: relative;">
     <div class="container">
       <h1><span class="highlight">WJ</span> Car Sales</h1>
       <p>El Mejor Precio del Mercado</p>
     </div>
-    <div style="width: 70%;" class="mt-4 lg:mt-0 flex flex-col lg:flex-row gap-4 lg:gap-8">
+    <!-- Botón del menú móvil -->
+    <button class="d-block d-lg-none btn text-white"
+            style="background: none; border: none; z-index: 1070; position: absolute; right: 1rem; top: 1rem;"
+            (click)="toggleSidebar()">
+      <i class="bi bi-list" style="font-size: 2rem;"></i>
+    </button>
+    <!-- Información de contacto (visible en desktop) -->
+    <div style="width: 70%;" class="mt-4 d-none d-lg-flex flex-col lg:flex-row gap-4 lg:gap-8">
       <div class="flex items-center gap-2 text-gray-300 hover:text-[#41d7a7] transition-colors">
         <i class="bi bi-phone"></i>
         <span>+1 (234) 567-8900</span>
@@ -20,6 +27,42 @@
     </div>
   </header>
 
+  <!-- Sidebar móvil -->
+  <div class="position-fixed top-0 end-0 h-100 bg-dark p-4"
+       style="width: 280px; transform: translateX(100%); transition: transform 0.3s ease-in-out; z-index: 1080;"
+       [style.transform]="isSidebarOpen ? 'translateX(0)' : 'translateX(100%)'">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h5 class="text-white mb-0">Contacto</h5>
+      <button class="btn text-white"
+              style="background: none; border: none;"
+              (click)="toggleSidebar()">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+    <div class="d-flex flex-column gap-4">
+      <a href="tel:+12345678900" class="d-flex align-items-center gap-3 text-white text-decoration-none">
+        <i class="bi bi-phone"></i>
+        <span>+1 (234) 567-8900</span>
+      </a>
+      <a href="mailto:contactoneautos.com" class="d-flex align-items-center gap-3 text-white text-decoration-none">
+        <i class="bi bi-envelope"></i>
+        <span>contactoneautos.com</span>
+      </a>
+      <div class="d-flex align-items-center gap-3 text-white">
+        <i class="bi bi-geo-alt"></i>
+        <span>123 Auto Drive, CA 90210</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overlay del sidebar -->
+  <div class="position-fixed top-0 start-0 w-100 h-100 bg-dark"
+       style="opacity: 0; visibility: hidden; transition: all 0.3s ease-in-out; z-index: 1070;"
+       [style.opacity]="isSidebarOpen ? '0.5' : '0'"
+       [style.visibility]="isSidebarOpen ? 'visible' : 'hidden'"
+       (click)="toggleSidebar()">
+  </div>
+
   <section class="car-showcase">
     <div class="container">
       <div style="font-weight: bold;" class="showcase-intro">
@@ -32,37 +75,35 @@
           <div class="position-relative w-100 mx-auto" style="max-width: 72rem; height: 600px;">
             @for (car of cars; track car.id; let index = $index) {
             @if (car.top_sales) {
-            <div class="position-absolute top-50 start-50 transition-all"
-              style="width: 800px; height: 400px; transition-duration: 700ms;" [style]="getSlideStyle(index)"
-              (mouseenter)="setIsAutoPlaying(false)" (mouseleave)="setIsAutoPlaying(true)">
+            <div class="position-absolute top-50 start-50 transition-all cursor-pointer"
+              style="width: min(800px, 90vw); height: min(400px, 70vh); transition-duration: 700ms;" [style]="getSlideStyle(index)"
+              (mouseenter)="setIsAutoPlaying(false)" (mouseleave)="setIsAutoPlaying(true)"
+              (click)="openCarModal(car)">
               <div style="border-radius: 30px;" class="position-relative w-100 h-100 shadow-lg overflow-hidden">
                 <img [src]="car.imagenUrlCompleta" [alt]="car.nombre" class="w-100 h-100 object-fit-cover" />
                 <div
                   class="position-absolute top-0 start-0 end-0 bottom-0 bg-dark bg-opacity-50 d-flex flex-column justify-content-end p-4">
 
-                  <div class="d-flex justify-content-between align-items-center">
-
-                    <div>
-                      <h2 class="display-6 text-white fw-bold mb-2">
+                  <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center">
+                    <div class="mb-3 mb-md-0">
+                      <h2 class="display-6 text-white fw-bold mb-2" style="font-size: clamp(1.5rem, 4vw, 2.5rem);">
                         {{ car.nombre }}
                       </h2>
-                      <p style="padding-right: 80px;" class="fs-5 text-light ">
+                      <p style="padding-right: 20px; max-height: 4.5em; overflow-y: auto; scrollbar-width: none; -ms-overflow-style: none; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; line-height: 1.5em; font-size: clamp(0.875rem, 2vw, 1rem);" class="text-light">
                         {{ car.descripcion }}
                       </p>
                     </div>
-                    <div>
-
-                      <div style="padding-top: 60px;">
+                    <div class="mt-auto mt-md-0">
+                      <div>
                         <div class="text-end">
-                          <p style="color: white; font-size: 20px; font-weight: 500;" class=" mb-0">
-                            15.000 mi
+                          <p style="color: white; font-size: clamp(1rem, 3vw, 1.25rem); font-weight: 500;" class="mb-0">
+                            {{ formatNumber(car.millas) }} mi
                           </p>
                         </div>
-                        <p class="fs-4 fw-bold mb-0" style="color: white  ;">
+                        <p class="fw-bold mb-0" style="color: white; font-size: clamp(1.25rem, 3.5vw, 1.5rem);">
                           ${{car.precio}}
                         </p>
                       </div>
-
                     </div>
                   </div>
                 </div>
@@ -74,18 +115,26 @@
         </div>
         <!-- Navigation Controls -->
         <button (click)="goToPrevious()"
-          class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/10 hover:bg-white/20 text-white p-4 rounded-full backdrop-blur-sm transition-all">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="m15 18-6-6 6-6" />
-          </svg>
+          class="position-absolute start-4 top-50 translate-middle-y text-white border-0 d-flex align-items-center justify-content-center"
+          style="z-index: 1000; width: 48px; height: 48px; cursor: pointer; transition: all 0.3s ease;">
+          <span class="d-none d-lg-flex align-items-center justify-content-center bg-dark bg-opacity-50 rounded-circle"
+                style="width: 60px; height: 60px; padding: 15px;">
+            <i class="bi bi-chevron-left" style="font-size: 2.5rem;"></i>
+          </span>
+          <span class="d-lg-none">
+            <i class="bi bi-chevron-left" style="font-size: 2.5rem;"></i>
+          </span>
         </button>
         <button (click)="goToNext()"
-          class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/10 hover:bg-white/20 text-white p-4 rounded-full backdrop-blur-sm transition-all">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="m9 18 6-6-6-6" />
-          </svg>
+          class="position-absolute end-4 top-50 translate-middle-y text-white border-0 d-flex align-items-center justify-content-center"
+          style="z-index: 1000; width: 48px; height: 48px; cursor: pointer; transition: all 0.3s ease;">
+          <span class="d-none d-lg-flex align-items-center justify-content-center bg-dark bg-opacity-50 rounded-circle"
+                style="width: 60px; height: 60px; padding: 15px;">
+            <i class="bi bi-chevron-right" style="font-size: 2.5rem;"></i>
+          </span>
+          <span class="d-lg-none">
+            <i class="bi bi-chevron-right" style="font-size: 2.5rem;"></i>
+          </span>
         </button>
         <!-- Dots Navigation -->
         <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-2">
@@ -108,7 +157,7 @@
               style="transition: all 0.3s ease; cursor: pointer;" (click)="openCarModal(car)"
               onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
               <div class="position-relative" style="height: 260px;">
-                <img [src]="car.imagenUrlCompleta" [alt]="car.nombre" alt="Toyota Camry"
+                <img [src]="car.imagenUrlCompleta" [alt]="car.nombre"
                   class="w-100 h-100 object-fit-cover" />
               </div>
               <div class="card-body p-4">
@@ -119,26 +168,25 @@
 
                 <div class="d-flex justify-content-between align-items-center mb-4">
                   <div>
-                    <p class="fs-3 fw-bold mb-0" style="color: #002126;">
+                    <p class="fs-3 fw-bold mb-0" style="color: #41d7a7;">
                       ${{car.precio}}
                     </p>
                   </div>
+                  <p class="fs-4">-</p>
                   <div class="text-end">
                     <p style="color: black; font-size: 20px; font-weight: 500;" class=" mb-0">
-                      15.000 mi
+                      {{formatNumber(car.millas)}} mi
                     </p>
                   </div>
                 </div>
 
-                <div class="bg-light rounded-3 p-3 mb-4">
+                <div class="bg-light rounded-3 p-3 mb-4" style="max-height: 80px; overflow-y: auto;">
                   <p class="text-secondary mb-0">
                     @for (caracteristica of car.caracteristicas; track caracteristica) {
-                    {{caracteristica}} |
+                    <a style="color: rgb(126, 126, 119);">{{caracteristica}} | </a>
                     }
                   </p>
                 </div>
-
-
 
                 <button (click)="onWhatsAppClick(car, $event)"
                   class="btn w-100 text-white fw-semibold py-2 px-4 rounded-3 position-relative overflow-hidden"
@@ -169,6 +217,7 @@
       </div>
     </div>
 
+    <!--Seccion Garantia-->
     <div class="container-fluid py-5">
       <div class="container">
         <div class="row align-items-center">
@@ -316,8 +365,12 @@
 
       <!-- Modal Header with Image -->
       <div class="position-relative">
-        <img [src]="selectedCar.imagenUrlCompleta" [alt]="selectedCar.nombre" class="w-100 object-fit-cover"
-          style="height: 320px; border-top-left-radius: inherit; border-top-right-radius: inherit;" />
+        <img [src]="selectedCar.imagenUrlCompleta" [alt]="selectedCar.nombre"
+          class="w-100 h-100 object-fit-cover d-none d-lg-block"
+          style="max-height: 400px; height: 320px; object-position: center;" />
+        <img [src]="selectedCar.imagenUrlCompleta" [alt]="selectedCar.nombre"
+          class="w-100 d-block d-lg-none"
+          style="height: min(320px, 50vh); object-fit: contain; background-color: rgba(0, 0, 0, 0.03);" />
         <button
           class="position-absolute top-0 end-0 mt-4 me-4 btn btn-sm rounded-circle bg-dark bg-opacity-50 text-white p-2"
           style="backdrop-filter: blur(4px);" (click)="closeModal()">
@@ -365,12 +418,20 @@
             </p>
           </div>
           <div class="col text-end">
-            <h3 class="text-secondary mb-2 small">Características</h3>
+            <h3 class="text-secondary mb-1">Millas</h3>
             <div class="d-flex flex-wrap gap-2 justify-content-end">
-              @for (caracteristica of selectedCar.caracteristicas; track caracteristica) {
-              <span class="badge bg-secondary">{{caracteristica}}</span>
-              }
+              <span class="fs-6 fw-bold text-black">{{formatNumber(selectedCar.millas)}} miles</span>
             </div>
+          </div>
+        </div>
+
+        <!--Caracteristicas-->
+        <div class="col mb-4">
+          <h3 class="text-secondary mb-2 small">Características</h3>
+          <div class="d-flex flex-wrap gap-2">
+            @for (caracteristica of selectedCar.caracteristicas; track caracteristica) {
+            <span class="badge bg-secondary p-2 fs-6">{{caracteristica}}</span>
+            }
           </div>
         </div>
 
@@ -384,9 +445,6 @@
 
         <!-- Action Buttons -->
         <div class="d-flex gap-3">
-          <button class="btn btn-outline-secondary rounded-3 px-4 py-2" (click)="closeModal()">
-            Cerrar
-          </button>
           <button class="btn flex-grow-1 text-white rounded-3 px-4 py-2 position-relative overflow-hidden"
             style="background-image: linear-gradient(to right, #25D366, #20BD5A);"
             (click)="onWhatsAppClick(selectedCar, $event)">

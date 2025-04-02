@@ -19,6 +19,7 @@ export class HomeComponent {
   phone: string = '13083891551';
   selectedCar: Car | null = null;
   showModal = false;
+  isSidebarOpen = false;
 
   currentIndex = 0;
   isAutoPlaying = true;
@@ -105,6 +106,19 @@ export class HomeComponent {
     const whatsappUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
     if (typeof window !== 'undefined') {
       window.open(whatsappUrl, '_blank');
+    }
+  }
+
+  formatNumber(number: number): string {
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
+  toggleSidebar() {
+    this.isSidebarOpen = !this.isSidebarOpen;
+    if (this.isSidebarOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
     }
   }
 
