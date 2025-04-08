@@ -1,7 +1,7 @@
 <div class="principal">
   <header style="display: flex; justify-content: space-between; position: relative;">
-    <div class="container">
-      <h1><span class="highlight">WJ</span> Car Sales</h1>
+    <div style="margin-left: 30px;" class="container">
+      <img src="../../../assets/img/logo/logo.png" alt="Logo" style=" height: 50px;">
       <p>El Mejor Precio del Mercado</p>
     </div>
     <!-- Botón del menú móvil -->
@@ -52,6 +52,10 @@
         <i class="bi bi-geo-alt"></i>
         <span>123 Auto Drive, CA 90210</span>
       </div>
+      <a href="mailto:contactoneautos.com" class="d-flex align-items-center gap-3 text-white text-decoration-none">
+        <i class="bi bi-car-front-fill"></i>
+        <span>Precalifica</span>
+      </a>
     </div>
   </div>
 
@@ -68,6 +72,10 @@
       <div style="font-weight: bold;" class="showcase-intro">
         <h2>Encuentra tu vehículo</h2>
         <p>Descubre nuestra selección de vehículos de alta calidad con los mejores precios del mercado</p>
+        <a href="https://tupagina.com/precalifica"
+   style="display: inline-block; padding: 15px 30px; background-color: #1E90FF; color: white; text-decoration: none; font-size: 18px; font-weight: bold; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); transition: background-color 0.3s ease, transform 0.3s ease;">
+   Precalifica
+</a>
       </div>
 
       <div style="height: 500px;" class="relative h-screen w-full overflow-hidden bg-gradient-to-b">
@@ -275,30 +283,25 @@
     <div class="row" style="display: flex; justify-content: space-between;">
       <!-- Column 1 - ONE + Description -->
       <div class="col-12 col-md-4 mb-4 mb-md-0">
-        <h3 class="fs-4 fw-semibold text-success mb-3">
-          ONE
-        </h3>
+        <img src="../../../assets/img/logo/logo.png" alt="Logo" style=" height: 50px;">
         <p style="color: white;" class="Z mb-3">
-          ONE es tu mejor opción para comprar y vender autos.
-          Ofrecemos una experiencia personalizada y transparente, conectando compradores y vendedores de manera segura y
-          eficiente.
-        </p>
+          En WJ CARS conectamos personas con las mejores oportunidades sobre ruedas.
+          Compra y vende autos con seguridad, asesoría experta y financiamiento flexible.
+         </p>
+
         <div class="d-flex align-items-center gap-3 mb-4">
-          <a href="#" class="text-secondary hover-text-white">
+          <a href="https://www.facebook.com/WilliamKeysmotors/" class="text-secondary hover-text-white">
             <i class="bi bi-facebook"></i>
           </a>
-          <a href="#" class="text-secondary hover-text-white">
+          <a href="https://www.instagram.com/josephwilliamcarsales/" class="text-secondary hover-text-white">
             <i class="bi bi-instagram"></i>
           </a>
-          <a href="#" class="text-secondary hover-text-white">
-            <i class="bi bi-linkedin"></i>
+          <a href="https://www.tiktok.com/@wise_journeycarsales" class="text-secondary hover-text-white">
+            <i class="bi bi-tiktok"></i>
           </a>
-          <a href="#" class="text-secondary hover-text-white">
-            <i class="bi bi-youtube"></i>
-          </a>
-          <a href="#" class="text-secondary hover-text-white small">
+          <!-- <a href="#" class="text-secondary hover-text-white small">
             privacy policy
-          </a>
+          </a> -->
         </div>
       </div>
 
@@ -334,7 +337,7 @@
       </div>
 
       <!-- Column 4 - Contact -->
-      <div class="col-12 col-md-2 mb-4 mb-md-0">
+    <!--   <div class="col-12 col-md-2 mb-4 mb-md-0">
         <h4 style="color: white;" class="fs-5 fw-semibold mb-3">Encuéntranos</h4>
         <ul class="list-unstyled">
           <li class="mb-2">
@@ -348,9 +351,12 @@
             </a>
           </li>
         </ul>
-      </div>
+      </div> -->
     </div>
 
+    <div class="row">
+      <p>Developed by: <a href="">&lt;/ERA&gt;</a></p>
+    </div>
   </div>
 </footer>
 
@@ -364,7 +370,7 @@
     <div class="modal-content border-0 rounded-4 overflow-hidden">
 
       <!-- Modal Header with Image -->
-      <div class="position-relative">
+      <div class="position-relative" style="height: 300px;">
         <img [src]="selectedCar.imagenUrlCompleta" [alt]="selectedCar.nombre"
           class="w-100 h-100 object-fit-cover d-none d-lg-block"
           style="max-height: 400px; height: 320px; object-position: center;" />

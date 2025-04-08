@@ -348,32 +348,32 @@ export class CreateCarComponent {
     this.shownErrors.clear();
   }
 
-  capturarFile(event: Event){
-    //mapear el input
+  capturarFile(event: Event) {
     const input = event.target as HTMLInputElement;
-
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
 
-      // Verifica que el tipo MIME sea una imagen
-      if (!file.type.startsWith('image/')) {
-        this.toastr.error('Solo se permiten archivos de imagen.');
-        this.selectedFile = null;  // Reinicia la selección de archivos
+      // Verificar que el archivo sea de tipo imagen permitido
+      const tiposPermitidos = ['image/jpeg', 'image/png', 'image/webp'];
+      if (!tiposPermitidos.includes(file.type)) {
+        this.toastr.error('Solo se permiten archivos de imagen en formato JPEG, PNG o WebP.');
+        this.selectedFile = null;
         return;
       }
 
-      // Verifica el tamaño del archivo (máximo 5MB)
+      // Verificar tamaño máximo (5MB)
       const maxSizeInMB = 5;
       if (file.size > maxSizeInMB * 1024 * 1024) {
         this.toastr.error(`El tamaño del archivo no debe exceder los ${maxSizeInMB} MB.`);
-        this.selectedFile = null;  // Reinicia la selección de archivos
+        this.selectedFile = null;
         return;
       }
 
-      this.selectedFile = file;  // Guarda el archivo seleccionado
+      this.selectedFile = file;
     }
-
   }
+
+
 
 }
 

@@ -1,6 +1,6 @@
 export const environment = {
-    URL_BACKEND: 'http://3.131.36.141/api',
-    URL_SERVICIOS: 'http://3.131.36.141/api/api',
-    URL_FRONTED: 'http://3.131.36.141/app',
+    URL_BACKEND: 'https://apiwj.wj-cars.com/',
+    URL_SERVICIOS: 'https://apiwj.wj-cars.com/api',
+    URL_FRONTED: 'https://store.wj-cars.com',
     production: true,
 };
